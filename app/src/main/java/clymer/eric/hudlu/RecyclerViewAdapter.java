@@ -8,14 +8,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 /**
- * Created by eric.clymer on 11/26/2015.
+ * Created by a guy named eric clymer on 11/26/2015.
  */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.EricsViewHolder> {
 
     String[] inputData;
+    private OnAdapterInteractionListener mListener;
 
     public RecyclerViewAdapter(Context context, String[] data) {
         inputData = data;
+        mListener = (OnAdapterInteractionListener) context;
     }
 
     @Override
@@ -25,13 +27,25 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(EricsViewHolder holder, int position) {
+    public void onBindViewHolder(EricsViewHolder holder, final int position) {
         holder.myText.setText(inputData[position]);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onItemClicked(v, position);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return inputData.length;
+    }
+
+    public interface OnAdapterInteractionListener {
+
+
+        void onItemClicked(View view, int position);
     }
 
     public static class EricsViewHolder extends RecyclerView.ViewHolder {

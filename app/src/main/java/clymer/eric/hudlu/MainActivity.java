@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnAdapterInteractionListener {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager linearLayoutManager;
@@ -74,5 +74,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClicked(View view, int position) {
+        Snackbar.make(view, inputData[position], Snackbar.LENGTH_SHORT).show();
     }
 }
