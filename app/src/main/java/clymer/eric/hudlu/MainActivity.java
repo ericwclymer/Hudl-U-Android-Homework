@@ -24,24 +24,18 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import clymer.eric.hudlu.models.MashableNews;
+import clymer.eric.hudlu.models.MashableNewsItem;
 
 public class MainActivity extends AppCompatActivity implements RecyclerViewAdapter.OnAdapterInteractionListener {
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager linearLayoutManager;
     private RecyclerView.Adapter recyclerViewAdapter;
-    private String[] inputData = new String[]{
-            "Eric Clymer",
-            "Eric Clymer1",
-            "Eric Clymer2",
-            "Eric Clymer3",
-            "Eric Clymer4",
-            "Eric Clymer5",
-            "Eric Clymer6",
-            "Eric Clymer7",
-            "test"
-    };
+    private List<MashableNewsItem> inputData = new ArrayList<MashableNewsItem>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +78,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                         @Override
                         public void onResponse(String response) {
                             MashableNews news = new Gson().fromJson(response, MashableNews.class);
+                            inputData.addAll(news.newsItems);
+                            recyclerViewAdapter.notifyDataSetChanged();
                             Log.d("your tag", news.newsItems.get(0).title);
                             // Asynchronous 'success' call back that runs on the main thread
                         }
@@ -131,6 +127,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
     @Override
     public void onItemClicked(View view, int position) {
-        Snackbar.make(view, inputData[position], Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(view, inputData.get(position).author, Snackbar.LENGTH_SHORT).show();
     }
 }
