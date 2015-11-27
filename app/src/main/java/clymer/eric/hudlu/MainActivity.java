@@ -8,12 +8,26 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager linearLayoutManager;
+    private RecyclerView.Adapter recyclerViewAdapter;
+    private String[] inputData = new String[]{
+            "Eric Clymer",
+            "Eric Clymer1",
+            "Eric Clymer2",
+            "Eric Clymer3",
+            "Eric Clymer4",
+            "Eric Clymer5",
+            "Eric Clymer6",
+            "Eric Clymer7",
+            "test"
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,10 +44,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.rv);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getBaseContext());
+        recyclerView = (RecyclerView) findViewById(R.id.rv);
+        linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        recyclerViewAdapter =
+                new RecyclerViewAdapter(this, inputData);
+        recyclerView.setAdapter(recyclerViewAdapter);
     }
 
     @Override
